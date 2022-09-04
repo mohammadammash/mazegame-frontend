@@ -23,7 +23,16 @@
 
 		<p>The object of this game is to guide the mouse cursor through the start area and get to the end area.  Be sure to avoid the walls:</p>
 		<div class="boundary example"></div>
-		<h2>Total Score: <span id='score'>0</span></p>
+		<h2>Total Score: <span id='score'>0</span></h2>
+		<div class="centered">
+		<label for="levelDrop">Choose Your Level Please: </label>
+		<select id="levelDrop">
+			<option value="1">Easy</option>
+			<option value="2">Medium</option>
+			<option value="3">Hard</option>
+		</select>	
+		</div>
+		<div class="centered"><span id="timer">30</span> seconds left!!</div>
 		<script src="js/app.js" type="text/javascript"></script>
 	</body>
 </html>
