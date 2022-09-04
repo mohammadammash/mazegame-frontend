@@ -2,34 +2,36 @@ var gameBoard = document.getElementById("game");
 var start = document.getElementById("start");
 var boundaries = document.getElementsByClassName("boundary");
 var end = document.getElementById("end");
-var sts = document.getElementById('status')
+var sts = document.getElementById("status");
+var scoreShow = document.getElementById("score");
+
+// Intializing Variables
+var win = false;
+var lose = false;
+var score = 0;
 var orgStatus = sts.textContent;
 
-// Game Start
-start.addEventListener("mouseover", (e) => {
-    reset();
-    var win = lose = false;
+// Main Game:
+start.addEventListener("mouseover", () => {
+  reset();
+  win = false;
+  lose = false;
 
-    for (bd of boundaries) {
-        bd.addEventListener('mouseover',()=>{
-            console.log(win);
-            if(!win){
-            redWallsColor();
-            sts.textContent = 'You Lost!!';
-            lost = true;
-            }
-        })
+  catchCheating();
+  touchBoundaries();
+
+  end.addEventListener("mouseover", () => {
+    if (!lose && !win) {
+      sts.textContent = "You Won!!";
+      win = true;
+      winNow = true;
+      score += 5;
+      scoreShow.textContent = score;
     }
+  });
+});
 
-    end.addEventListener('mouseover',()=>{
-        if (!lost){
-            sts.textContent = "You Won!!";
-            win = true;
-        }
-    })
-
-})
-
+// -----FUNCTIONS-------:
 
 // reset walls to original color
 function reset() {
@@ -46,6 +48,28 @@ function redWallsColor() {
   }
 }
 
+// user touches boundaries:
+function touchBoundaries() {
+  for (bd of boundaries) {
+    bd.addEventListener("mouseover", () => {
+      if (!win && !lose) {
+        redWallsColor();
+        sts.textContent = "You Lost!!";
+        lose = true;
+        score -= 10;
+        scoreShow.textContent = score;
+      }
+    });
+  }
+}
 
-
-
+// user catched cheating (got out of gameBoard)
+function catchCheating() {
+  gameBoard.addEventListener("mouseleave", () => {
+    if (!win && !lose) {
+      redWallsColor();
+      sts.textContent = "You Cannot Get Out Of Board, Try Again!!";
+      lose = true;
+    }
+  });
+}
